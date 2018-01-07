@@ -9,6 +9,7 @@ The website is built based on Hexo, and it is used to publish news, products and
 ## Commands
 
 - **Run on Local:** `$ hexo server`
+- **Build for Prod:** `$ hexo generate`
 - **Deploy to GH:** `$ hexo deploy`
 
 ## License
