@@ -4,7 +4,7 @@ Yet another website in Yet Another Hole. See: http://yetanotherhole.com
 
 ## Introduction
 
-The website is built based on Hexo, and it is used to publish news, products and profiles of YAH, supporting R18n and responsive design.
+The website is built based on Hexo, and it is used to publish news, products and profiles of YAH, supporting i18n and responsive design.
 
 ## Commands
 
