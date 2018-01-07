@@ -7,22 +7,21 @@ title: Yet Another Hole
 subtitle:
 description:
 author:
-language:
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://yetanotherhole.com
 root: /
-permalink: :year/:month/:day/:title/
+permalink: blog/:title/
 permalink_defaults:
 
 # Directory
 source_dir: source
 public_dir: public
-tag_dir: tags
-archive_dir: archives
-category_dir: categories
+archive_dir: blog
+tag_dir: blog/tags
+category_dir: blog/categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
@@ -69,10 +68,24 @@ time_format: HH:mm:ss
 per_page: 5
 pagination_dir: page
 
+# I18n
+language:
+  - zh-hans
+  - en
+i18n:
+  type: [page, post]
+  generator: [index, tag, archive, feed]
+
+# Feed:
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: phantom
+theme: cactus-light
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
