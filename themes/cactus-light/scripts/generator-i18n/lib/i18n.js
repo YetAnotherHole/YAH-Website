@@ -131,7 +131,6 @@ function i18n_others (locals) {
   var siteLocals = _self.locals.toObject()
 
   this.config.i18n.generator.forEach(function (g) {
-
     var datas = gs[g].call(_self, siteLocals).then(function (data) {
       _self.log.debug('i18n for generator: %s', g)
       if (g === 'feed') {

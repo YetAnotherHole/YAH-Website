@@ -1,7 +1,0 @@
----
-title: About YAH
-permalink: test
-tags:
-  - 一
-  - 二
----

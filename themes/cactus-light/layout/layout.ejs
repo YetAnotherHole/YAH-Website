@@ -2,17 +2,16 @@
 <html lang="<%= page.lang %>">
 <%- partial('_partial/head') %>
 <body>
-    <% if (is_post()) { %>
-      <%- partial('_partial/post/actions_desktop') %>
+    <% if (!is_post()) { %>
+      <%- partial('_partial/header') %>
     <% } %>
-    <div class="content index width mx-auto px2 my4">
-        <% if (!is_post()) { %>
-          <%- partial('_partial/header') %>
-        <% } %>
+    <div class="content width mx-auto px3 my1 <% if (!is_post()) { %>page<% } else { %>post<% } %>">
         <%- body %>
     </div>
-    <% if (is_post()) { %>
-      <%- partial('_partial/post/actions_mobile') %>
+    <% if (!is_post()) { %>
+      <div class="nametype">
+        <span><%= config.title %></span>
+      </div>
     <% } %>
     <%- partial('_partial/footer') %>
 </body>

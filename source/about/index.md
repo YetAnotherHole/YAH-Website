@@ -2,4 +2,6 @@
 title: 关于
 ---
 
-123
+# About
+
+please see [YAH-Brand](https://github.com/YetAnotherHole/YAH-Brand)

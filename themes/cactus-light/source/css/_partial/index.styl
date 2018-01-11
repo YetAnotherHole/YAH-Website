@@ -3,6 +3,10 @@
   list-style: none
   padding: 0
   margin: 0
+
+  .fa-github
+    transform: scale(1.18)
+
   li
     display: inline-block
   li:after
@@ -10,14 +14,17 @@
   li:last-child:after
     content: ""
   li:nth-last-child(2):after
-    content: " and "
+    content: " & "
 
 .post-list
   padding: 0
+
   .post-item
+    align-items: center
     list-style-type: none
     margin-left: 0
     margin-bottom: 1rem
+
     .meta
       display: block
       font-size: 14px

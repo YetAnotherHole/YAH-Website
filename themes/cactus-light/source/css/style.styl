@@ -11,23 +11,25 @@ global-reset()
   box-sizing: border-box
 
 html
-  height: 100%
+  height: 100vh
   // border-top: 2px solid $color-text
   -webkit-text-size-adjust: 100%
   -ms-text-size-adjust: 100%
 
 body
   color: $color-text
-  background-color: $color-background
+  background: $color-background !important
   font-size: $font-size
   font-family: $font-family-body
   font-weight: 400
   line-height: $line-height
   text-rendering: geometricPrecision
-  min-height: 100%
+  min-height: 100vh
+  margin: 0
   display: flex
   flex-direction: column
   antialias()
+  -webkit-print-color-adjust: exact
 
 .content
   flex: 1
@@ -72,6 +74,11 @@ body
   h6 a:hover
     underline(6px, $color-link)
 
+canvas
+  margin-bottom: 0
+  vertical-align: middle
+  user-select: none
+
 @media (min-width: 540px)
   .image-wrap
     flex-direction: row
@@ -84,13 +91,25 @@ body
 
 .width
   width: 100%
-  max-width: 39rem
+  max-width: 760px
+
+.nametype
+  position: fixed
+  padding-top: 2rem
+  right: 2.1rem
+  bottom: 2.2rem
+  font-size: 16px
+  line-height: 1
+  writing-mode: tb-rl
+
+  @media (max-width: 480px)
+    display: none
 
 @media (max-width: 480px)
   // smaller margins at smaller screen widths
   .px3
-    padding-left: 1rem
-    padding-right: 1rem
+    // padding-left: 1rem
+    // padding-right: 1rem
   .my4
     margin-top: 2rem
     margin-bottom: 2rem
@@ -109,6 +128,10 @@ body
 @import "_partial/comments"
 @import "_partial/footer"
 @import "_partial/pagination"
+@import "_page/**"
+
+::selection
+  background: #d1ccc5
 
 // Code
 @import "_highlight/" + highlight

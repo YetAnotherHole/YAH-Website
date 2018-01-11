@@ -1,0 +1,43 @@
+.content.page
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  max-width: 90%
+  overflow-x: hidden
+  padding-bottom: 7rem
+
+  @media (min-width: 480px)
+    padding-bottom: 12rem
+
+  .slides
+    padding: 0 6rem
+
+    h1, .h1
+      font-family: $font-family-chinese
+      font-weight: 300
+
+    h2, .h2
+      color: $color-brand
+
+    p, li
+      font-size: 16px
+
+    .slide
+      position: relative
+
+      > :first-child
+        margin-top: 2rem
+
+    .step-origin
+
+      ul
+        list-style: none
+        text-align: right
+
+      #pt
+        margin: 5px 0
+        max-width: 300px
+        min-height: 160px
+        max-height: 250px
+        user-select: none

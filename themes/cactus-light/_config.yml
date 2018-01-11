@@ -1,7 +1,7 @@
 nav:
-  Home: /
-  Writing: /blog/
-  About: /about/
+  # Home: /
+  # Writing: /blog/
+  # About: /about/
 
 projects_url:
 
@@ -10,9 +10,9 @@ customize:
         email:
     logo:
         enabled: true
-        width: 50
-        height: 50
-        url: /images/logo-circle.png
+        width: 42
+        height: 42
+        url: /images/logo-circle.svg
         gravatar: false
     favicon:
       # eg. generate with http://realfavicongenerator.net/
@@ -25,11 +25,6 @@ customize:
       apple:
         url: /images/apple-touch-icon.png
         gravator: false
-    social_links:
-        github: /
-        twitter: /
-        facebook: /
-        linkedin: /
     show_all_posts: false
     post_count: 5
     highlight: monokai
