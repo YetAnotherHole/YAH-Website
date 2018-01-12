@@ -1,200 +1,103 @@
-/*
-	Phantom by HTML5 UP
-	html5up.net | @n33co
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
+/**
+ * Sets up Justified Gallery.
+ */
+if ($.prototype.justifiedGallery) {
+  var options = {
+    rowHeight: 140,
+    margins: 4,
+    lastRow: 'justify'
+  }
+  $('.article-gallery').justifiedGallery(options)
+}
 
-(function($) {
+$(document).ready(function () {
+  /**
+   * Shows the responsive navigation menu on mobile.
+   */
+  $('#header > #nav > ul > .icon').click(function () {
+    $('#header > #nav > ul').toggleClass('responsive')
+  })
 
-	skel.breakpoints({
-		xlarge:	'(max-width: 1680px)',
-		large:	'(max-width: 1280px)',
-		medium:	'(max-width: 980px)',
-		small:	'(max-width: 736px)',
-		xsmall:	'(max-width: 480px)'
-	});
+  /**
+   * Controls the different versions of  the menu in blog post articles
+   * for Desktop, tablet and mobile.
+   */
+  if ($('.post').length) {
+    /**
+     * Display the menu if the menu icon is clicked.
+     */
+    var menu = $('#menu')
+    var menu_icon = $('#menu-icon, #menu-icon-tablet')
+    menu_icon.click(function () {
+      if (menu.css('visibility') === 'hidden') {
+        menu.css('visibility', 'visible')
+        menu_icon.addClass('active')
+      } else {
+        menu.css('visibility', 'hidden')
+        menu_icon.removeClass('active')
+      }
+      return false
+    })
 
-	$(function() {
+    /**
+     * Add a scroll listener to the menu to hide/show the navigation links.
+     */
+    if (menu.length) {
+      $(window).on('scroll', function () {
+        var topDistance = $('#menu > #nav').offset().top
 
-		var	$window = $(window),
-			$body = $('body');
+        // hide only the navigation links on desktop
+        if (menu.css('visibility') !== 'hidden' && topDistance < 50) {
+          $('#menu > #nav').show()
+        } else if (menu.css('visibility') !== 'hidden' && topDistance > 100) {
+          $('#menu > #nav').hide()
+        }
 
-		// Disable animations/transitions until the page has loaded.
-			$body.addClass('is-loading');
+        // on tablet, hide the navigation icon as well and show a "scroll to top
+        // icon" instead
+        if (!$('#menu-icon').is(':visible') && topDistance < 50) {
+          $('#menu-icon-tablet').show()
+          $('#top-icon-tablet').hide()
+        } else if (!$('#menu-icon').is(':visible') && topDistance > 100) {
+          $('#menu-icon-tablet').hide()
+          $('#top-icon-tablet').show()
+        }
+      })
+    }
 
-			$window.on('load', function() {
-				window.setTimeout(function() {
-					$body.removeClass('is-loading');
-				}, 100);
-			});
+    /**
+     * Show mobile navigation menu after scrolling upwards,
+     * hide it again after scrolling downwards.
+     */
+    if ($('#footer-post').length) {
+      var lastScrollTop = 0
+      $(window).on('scroll', function () {
+        var topDistance = $(window).scrollTop()
 
-		// Touch?
-			if (skel.vars.touch)
-				$body.addClass('is-touch');
+        if (topDistance > lastScrollTop) {
+          // downscroll -> show menu
+          $('#footer-post').hide()
+        } else {
+          // upscroll -> hide menu
+          $('#footer-post').show()
+        }
+        lastScrollTop = topDistance
 
-		// Forms.
-			var $form = $('form');
+        // close all submenu's on scroll
+        $('#nav-footer').hide()
+        $('#toc-footer').hide()
+        $('#share-footer').hide()
 
-			// Auto-resizing textareas.
-				$form.find('textarea').each(function() {
-
-					var $this = $(this),
-						$wrapper = $('<div class="textarea-wrapper"></div>'),
-						$submits = $this.find('input[type="submit"]');
-
-					$this
-						.wrap($wrapper)
-						.attr('rows', 1)
-						.css('overflow', 'hidden')
-						.css('resize', 'none')
-						.on('keydown', function(event) {
-
-							if (event.keyCode == 13
-							&&	event.ctrlKey) {
-
-								event.preventDefault();
-								event.stopPropagation();
-
-								$(this).blur();
-
-							}
-
-						})
-						.on('blur focus', function() {
-							$this.val($.trim($this.val()));
-						})
-						.on('input blur focus --init', function() {
-
-							$wrapper
-								.css('height', $this.height());
-
-							$this
-								.css('height', 'auto')
-								.css('height', $this.prop('scrollHeight') + 'px');
-
-						})
-						.on('keyup', function(event) {
-
-							if (event.keyCode == 9)
-								$this
-									.select();
-
-						})
-						.triggerHandler('--init');
-
-					// Fix.
-						if (skel.vars.browser == 'ie'
-						||	skel.vars.mobile)
-							$this
-								.css('max-height', '10em')
-								.css('overflow-y', 'auto');
-
-				});
-
-			// Fix: Placeholder polyfill.
-				$form.placeholder();
-
-		// Prioritize "important" elements on medium.
-			skel.on('+medium -medium', function() {
-				$.prioritize(
-					'.important\\28 medium\\29',
-					skel.breakpoint('medium').active
-				);
-			});
-
-		// Menu.
-			var $menu = $('#menu');
-
-			$menu.wrapInner('<div class="inner"></div>');
-
-			$menu._locked = false;
-
-			$menu._lock = function() {
-
-				if ($menu._locked)
-					return false;
-
-				$menu._locked = true;
-
-				window.setTimeout(function() {
-					$menu._locked = false;
-				}, 350);
-
-				return true;
-
-			};
-
-			$menu._show = function() {
-
-				if ($menu._lock())
-					$body.addClass('is-menu-visible');
-
-			};
-
-			$menu._hide = function() {
-
-				if ($menu._lock())
-					$body.removeClass('is-menu-visible');
-
-			};
-
-			$menu._toggle = function() {
-
-				if ($menu._lock())
-					$body.toggleClass('is-menu-visible');
-
-			};
-
-			$menu
-				.appendTo($body)
-				.on('click', function(event) {
-					event.stopPropagation();
-				})
-				.on('click', 'a', function(event) {
-
-					var href = $(this).attr('href');
-
-					event.preventDefault();
-					event.stopPropagation();
-
-					// Hide.
-						$menu._hide();
-
-					// Redirect.
-						if (href == '#menu')
-							return;
-
-						window.setTimeout(function() {
-							window.location.href = href;
-						}, 350);
-
-				})
-				.append('<a class="close" href="#menu">Close</a>');
-
-			$body
-				.on('click', 'a[href="#menu"]', function(event) {
-
-					event.stopPropagation();
-					event.preventDefault();
-
-					// Toggle.
-						$menu._toggle();
-
-				})
-				.on('click', function(event) {
-
-					// Hide.
-						$menu._hide();
-
-				})
-				.on('keydown', function(event) {
-
-					// Hide on escape.
-						if (event.keyCode == 27)
-							$menu._hide();
-
-				});
-
-	});
-
-})(jQuery);
+        // show a "navigation" icon when close to the top of the page,
+        // otherwise show a "scroll to the top" icon
+        if (topDistance < 50) {
+          $('#actions-footer > ul > #top').hide()
+          $('#actions-footer > ul > #menu').show()
+        } else if (topDistance > 100) {
+          $('#actions-footer > ul > #menu').hide()
+          $('#actions-footer > ul > #top').show()
+        }
+      })
+    }
+  }
+})
