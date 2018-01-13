@@ -1323,6 +1323,10 @@ article .content .caption {
 .content.page .slides .slide > :first-child {
   margin-top: 2rem;
 }
+.content.page .slides .step-origin ul {
+  list-style: none;
+  text-align: right;
+}
 .content.page .slides .step-origin #pt {
   margin: 5px 0;
   max-width: 300px;
