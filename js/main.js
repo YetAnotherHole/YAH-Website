@@ -1,3 +1,19 @@
+Reveal.initialize({
+  margin: 0,
+  minScale: 1,
+  maxScale: 1,
+
+  // slideNumber: 'c/t',
+  touch: true,
+  // controls: false,
+  history: true,
+  controlsLayout: 'top-center',
+  progress: false,
+  autoSlideStoppable: false,
+
+  transition: 'fade'
+})
+
 /**
  * Sets up Justified Gallery.
  */

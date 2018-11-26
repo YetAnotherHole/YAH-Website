@@ -544,6 +544,7 @@ canvas {
   font-size: 16px;
   line-height: 1;
   writing-mode: tb-rl;
+  font-family: "Menlo", "Meslo LG", PingFang SC, Microsoft Yahei;
 }
 @media (max-width: 480px) {
   .nametype {
@@ -1287,12 +1288,293 @@ article .content .caption {
 .pagination a:hover:not(.active) {
   color: #111;
 }
+.home-story {
+  max-width: 300px;
+  max-height: 400px;
+}
+.home-story .slides {
+  padding: 0 !important;
+  width: 300px !important;
+  height: 400px !important;
+  text-align: inherit !important;
+}
+.home-story .story {
+  min-height: 400px !important;
+  top: 12px !important;
+}
+.home-story .story .amp-attach-handler,
+.home-story .story .amp-story-grid-layer {
+  transform: translate3d(-6px, -6px, 0);
+}
+.reveal {
+  font-family: "Menlo", "Meslo LG", PingFang SC, Microsoft Yahei;
+  font-size: 18px;
+  color: #363533;
+}
+::selection {
+  color: #fff;
+  background: #e3e1dc;
+  text-shadow: none;
+}
+::-moz-selection {
+  color: #fff;
+  background: #e3e1dc;
+  text-shadow: none;
+}
+.reveal .slides section,
+.reveal .slides section > section {
+  font-size: 18px;
+  padding: 0;
+  line-height: 1.625;
+  font-weight: inherit;
+}
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  margin: 0 0 20px 0;
+  color: #eee;
+  font-family: "FZNew BaoSong-Z12S", Pingfang SC, Impact, sans-serif;
+  font-weight: 300;
+  line-height: 1.3333;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  text-shadow: none;
+  word-wrap: break-word;
+}
+.reveal h1 {
+  font-size: 36px;
+}
+.reveal h2 {
+  font-size: 2.11em;
+}
+.reveal h3 {
+  font-size: 1.55em;
+}
+.reveal h4 {
+  font-size: 1em;
+}
+.reveal h1 {
+  text-shadow: none;
+}
+.reveal p {
+  margin: 32px;
+  text-align: left;
+}
+.reveal video,
+.reveal iframe {
+  max-width: 100%;
+  max-height: 100%;
+}
+.reveal strong,
+.reveal b {
+  font-weight: bold;
+}
+.reveal em {
+  font-style: italic;
+}
+.reveal ol,
+.reveal dl,
+.reveal ul {
+  display: block;
+  text-align: left;
+  margin: 0 0 0 1em;
+}
+.reveal ol {
+  list-style-type: decimal;
+}
+.reveal ul {
+  list-style-type: disc;
+}
+.reveal ul ul {
+  list-style-type: square;
+}
+.reveal ul ul ul {
+  list-style-type: circle;
+}
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+  display: block;
+  margin-left: 40px;
+}
+.reveal dt {
+  font-weight: bold;
+}
+.reveal dd {
+  margin-left: 40px;
+}
+.reveal blockquote {
+  display: block;
+  position: relative;
+  max-width: 80%;
+  margin: 20px auto;
+}
+.reveal blockquote p:first-child,
+.reveal blockquote p:last-child {
+  display: inline-block;
+}
+.reveal q {
+  font-style: italic;
+}
+.reveal pre {
+  display: block;
+  position: relative;
+  width: 90%;
+  margin: 20px auto;
+  text-align: left;
+  font-size: 0.55em;
+  font-family: monospace;
+  line-height: 1.2em;
+  word-wrap: break-word;
+  box-shadow: 0px 0px 6px rgba(0,0,0,0.3);
+}
+.reveal code {
+  font-family: monospace;
+  text-transform: none;
+}
+.reveal pre code {
+  display: block;
+  padding: 5px;
+  overflow: auto;
+  max-height: 400px;
+  word-wrap: normal;
+}
+.reveal table {
+  margin: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.reveal table th {
+  font-weight: bold;
+}
+.reveal table th,
+.reveal table td {
+  text-align: left;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  border-bottom: 1px solid;
+}
+.reveal table th[align="center"],
+.reveal table td[align="center"] {
+  text-align: center;
+}
+.reveal table th[align="right"],
+.reveal table td[align="right"] {
+  text-align: right;
+}
+.reveal table tbody tr:last-child th,
+.reveal table tbody tr:last-child td {
+  border-bottom: none;
+}
+.reveal sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+.reveal sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+.reveal small {
+  display: inline-block;
+  font-size: 0.6em;
+  line-height: 1.2em;
+  vertical-align: top;
+}
+.reveal small * {
+  vertical-align: top;
+}
+.reveal a {
+  color: $brand;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.reveal a:hover {
+  text-shadow: none;
+  border: none;
+}
+.reveal .roll span:after {
+  color: #fff;
+  background: #d08a1d;
+}
+.reveal section img {
+  background: rgba(255,255,255,0.12);
+}
+.reveal section img.plain {
+  border: 0;
+  box-shadow: none;
+}
+.reveal a img {
+  transition: all 0.15s linear;
+}
+.reveal a:hover img {
+  background: rgba(255,255,255,0.2);
+  border-color: $brand;
+  box-shadow: 0 0 20px rgba(0,0,0,0.55);
+}
+.reveal .controls {
+  position: fixed !important;
+  z-index: 3 !important;
+  right: auto !important;
+  left: 52% !important;
+  bottom: 20px !important;
+  transform: scale(0.6) translate3d(-50%, 0, 0);
+}
+.reveal .controls button {
+  bottom: 3.2em !important;
+  margin: 1rem 0 1rem 0;
+}
+.reveal .custom-controls {
+  z-index: 33;
+}
+.reveal .slide-number {
+  top: 13px;
+  right: 18px;
+  bottom: auto;
+  background: none;
+}
+.reveal .slide-number[tint="dark"] {
+  color: #000;
+}
+.reveal .sound-toggle {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  z-index: 44;
+  transition: 218ms;
+}
+.reveal .sound-toggle[tint="dark"] {
+  filter: brightness(-100%);
+}
+.reveal .progress {
+  background: rgba(255,255,255,0.3);
+  color: #fff;
+  height: 2px;
+  left: 64px;
+  top: 23px;
+  width: calc(100% - 136px);
+  bottom: auto;
+}
+.reveal .progress span {
+  -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+  -moz-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+  transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+}
+.reveal [animate-in="fadeIn"] {
+  opacity: 0;
+}
+@media print {
+  .backgrounds {
+    background-color: #111;
+  }
+}
 .content.page {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 90%;
   overflow-x: hidden;
   padding-bottom: 7rem;
 }
@@ -1317,22 +1599,26 @@ article .content .caption {
 .content.page .slides li {
   font-size: 16px;
 }
-.content.page .slides .slide {
-  position: relative;
-}
-.content.page .slides .slide > :first-child {
+.content.page .slides .story > :first-child {
   margin-top: 2rem;
 }
-.content.page .slides .step-origin ul {
+.content.page .slides ul {
+  margin-top: 1em;
   list-style: none;
   text-align: right;
 }
-.content.page .slides .step-origin #pt {
+.content.page .slides .story-origin #pt {
   margin: 5px 0;
-  max-width: 300px;
-  min-height: 160px;
-  max-height: 250px;
+  width: 300px;
+  height: 160px;
   user-select: none;
+}
+.content.page .slides .story-snowfall-space video {
+  width: 300px;
+  height: 160px;
+}
+.content.page .slides .story-snowfall-space ul {
+  margin-top: 0.55em;
 }
 .content.post {
   padding: 2rem;
