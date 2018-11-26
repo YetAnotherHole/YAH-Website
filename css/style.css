@@ -1522,6 +1522,12 @@ article .content .caption {
   bottom: 20px !important;
   transform: scale(0.6) translate3d(-50%, 0, 0);
 }
+@media (max-width: 480px) {
+  .reveal .controls {
+    left: 54% !important;
+    bottom: 0px !important;
+  }
+}
 .reveal .controls button {
   bottom: 3.2em !important;
   margin: 1rem 0 1rem 0;
