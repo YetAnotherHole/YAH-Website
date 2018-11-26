@@ -1305,6 +1305,7 @@ article .content .caption {
 @media (max-width: 480px) {
   .home-story .story {
     top: 0px !important;
+    padding-top: 0 !important;
   }
 }
 .home-story .story .amp-attach-handler,
