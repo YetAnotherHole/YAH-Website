@@ -1302,6 +1302,11 @@ article .content .caption {
   min-height: 400px !important;
   top: 12px !important;
 }
+@media (max-width: 480px) {
+  .home-story .story {
+    top: 0px !important;
+  }
+}
 .home-story .story .amp-attach-handler,
 .home-story .story .amp-story-grid-layer {
   transform: translate3d(-6px, -6px, 0);
