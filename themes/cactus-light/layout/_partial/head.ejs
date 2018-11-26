@@ -39,6 +39,7 @@
     <title><%= page.title ? page.title : config.title %></title>
     <!-- styles -->
     <%- css('css/style') %>
+    <%- css('lib/reveal/css/reveal.css') %>
     <!-- rss -->
     <% if (theme.rss === '' && config.feed && config.feed.path) { %>
       <% theme.rss = config.feed.path %>

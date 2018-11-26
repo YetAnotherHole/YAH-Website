@@ -1,5 +1,3 @@
-window.demoDescription = "If this is a sphere, it would visualize Hairy Ball Theorem, where you can't comb a hairy ball flat without creating a cowlick. This demo was done in javascript ES6 and compiled with babel."
-
 const space = new CanvasSpace('pt').setup({
   bgcolor: '#e3e1dc'
 })
@@ -10,6 +8,7 @@ const center = space.size.$divide(2)
 
 // A Circle that follows mouse and comb the VectorLines
 class Comb extends Circle {
+
   constructor (...args) {
     super(...args)
     this.lastPos = new Vector()
