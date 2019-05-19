@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta property="og:type" content="website">
 <meta property="og:title" content="Yet Another Hole">
@@ -44,8 +45,15 @@
 </head>
 
 <body>
-    
-      <header id="header">
+    <div class="yah-loading-indicator">
+  <div class="circle-bounce1"></div>
+  <div class="circle-bounce2"></div>
+  <div class="circle-bounce3"></div>
+</div>
+
+    <div class="content-container enter-preface">
+      
+        <header id="header">
   <a href="/">
   
     
@@ -66,9 +74,9 @@
   </div>
 </header>
 
-    
-    <div class="content width mx-auto px3 my1 page">
-        <section id="about" class="hidden">
+      
+      <div class="content width mx-auto px3 my1 page">
+          <section id="about" class="hidden">
   
 </section>
 
@@ -133,15 +141,15 @@
 </div>
 
 
-    </div>
-    
-      <div class="nametype">
-        <span>Yet Another Hole</span>
       </div>
-    
-    <footer id="footer" class="hidden">
+      
+        <div class="nametype">
+          <span>Yet Another Hole</span>
+        </div>
+      
+      <footer id="footer" class="hidden">
   <div class="footer-left">
-    Copyright &copy; 2018 Yet Another Hole
+    Copyright &copy; 2019 Yet Another Hole
   </div>
   <div class="footer-right">
     <nav>
@@ -152,6 +160,7 @@
   </div>
 </footer>
 
+    </div>
 </body>
 </html>
 <!-- styles -->
@@ -160,12 +169,13 @@
 <link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
 
 <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
 
-
+<script src="/lib/anime/anime.min.js"></script>
 <script src="/lib/reveal/reveal.min.js"></script>
-<script src="/js/main.js"></script>
 <script src="/lib/pt/pt.min.js"></script>
-<script src="/js/pt.vector.field.js"></script>
+<script src="/js/legacy.js"></script>
+<script src="/js/main.js"></script>
 <!-- Google Analytics -->
 
     <script type="text/javascript">
