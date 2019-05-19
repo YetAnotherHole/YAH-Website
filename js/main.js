@@ -11,7 +11,7 @@ class StaticPageManager {
 
   initData () {
     this.config = {
-      minLoadingDuration: 2000
+      minLoadingDuration: 1500
     }
     this.state = {
       startTime: Date.now(),
@@ -31,8 +31,6 @@ class StaticPageManager {
     const renderDelay = loadingCost > this.config.minLoadingDuration
       ? 0
       : Math.max(0, this.config.minLoadingDuration - loadingCost)
-
-    console.log(123, renderDelay)
 
     const removeLoading = () => {
       this.$map.$contentContainer.classList.add('appeared')
