@@ -6,14 +6,16 @@ class StaticPageManager {
     $(document).ready(() => {
       this.initReveal()
       this.initContent()
-      setTimeout(() => {
-        this.initStoryOrigin()
-      }, 500)
     })
   }
 
   initData () {
+    this.config = {
+      minLoadingDuration: 1000
+    }
     this.state = {
+      startTime: Date.now(),
+      loadedTime: null,
       isLoading: true
     }
     this.$map = {}
@@ -24,15 +26,28 @@ class StaticPageManager {
     this.$map.$contentContainer = document.querySelector('.content-container')
 
     // Remove Loading
-    this.$map.$contentContainer.classList.add('appeared')
-    anime({
-      targets: this.$map.$yahLoading,
-      opacity: 0,
-      duration: 318,
-      complete: () => {
-        this.$map.$yahLoading.remove()
-      }
-    })
+    this.state.loadedTime = Date.now()
+    const loadingCost = this.state.loadedTime - this.state.startTime
+    const renderDelay = loadingCost > this.config.minLoadingDuration
+      ? 0
+      : Math.max(0, this.config.minLoadingDuration - loadingCost)
+
+    const removeLoading = () => {
+      this.$map.$contentContainer.classList.add('appeared')
+      anime({
+        targets: this.$map.$yahLoading,
+        opacity: 0,
+        duration: 418,
+        complete: () => {
+          this.$map.$yahLoading.remove()
+          this.initStoryOrigin()
+        }
+      })
+    }
+
+    setTimeout(() => {
+      removeLoading()
+    }, renderDelay)
   }
 
   initReveal () {
