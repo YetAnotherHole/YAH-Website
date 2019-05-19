@@ -1,0 +1,34 @@
+@keyframes spinnerBounce
+  0%, 100%
+    transform: scale(0.0)
+
+  50%
+    transform: scale(1.0)
+
+.yah-loading-indicator
+  position: relative
+  width: 42px
+  height: 42px
+
+  .circle-bounce1,
+  .circle-bounce2,
+  .circle-bounce3
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    border-radius: 50%
+    opacity: 0.6
+    animation: spinnerBounce 1.5s infinite ease-in-out
+
+  .circle-bounce1
+    background-color: #000000
+
+  .circle-bounce2
+    background-color: #686868
+    animation-delay: -0.4s
+
+  .circle-bounce3
+    background-color: #ffffff
+    animation-delay: -0.9s

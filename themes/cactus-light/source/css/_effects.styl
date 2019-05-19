@@ -1,0 +1,15 @@
+enter-preface()
+  opacity: 0
+
+.enter-preface
+  enter-preface()
+
+  &.appeared
+    transition: 618ms
+    opacity: 1
+
+.fade-enter-active, .fade-leave-active
+  transition: opacity 268ms
+
+.fade-enter, .fade-leave-to
+  // opacity: 0

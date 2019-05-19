@@ -262,17 +262,37 @@ $layerEdgeSpacing = 32px
   position: fixed !important
   z-index: 3 !important
   right: auto !important
-  left: 52% !important
+  width: 100% !important
+  left: 0 !important
+  display: flex !important
+  justify-content: center
+  align-items: center
   bottom: 20px !important
-  transform: scale(0.6) translate3d(-50%, 0, 0)
+  transform: scale(0.6)
 
   @media (max-width: 480px)
-    left: 54% !important
     bottom: 0px !important
 
+  .navigate-left.enabled
+    opacity: 0.9 !important
+
   button
+    position: static !important
     bottom: 3.2em !important
     margin: 1rem 0 1rem 0
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 60px !important
+    height: 60px !important
+    border-radius: 50%
+    transition: 218ms
+
+    &[disabled="disabled"]
+      display: none
+
+    &:hover
+      background-color: #eeeeee
 
 .reveal .custom-controls
   z-index: 33

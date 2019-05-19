@@ -2,18 +2,21 @@
 <html lang="<%= page.lang %>">
 <%- partial('_partial/head') %>
 <body>
-    <% if (!is_post()) { %>
-      <%- partial('_partial/header') %>
-    <% } %>
-    <div class="content width mx-auto px3 my1 <% if (!is_post()) { %>page<% } else { %>post<% } %>">
-        <%- body %>
-    </div>
-    <% if (!is_post()) { %>
-      <div class="nametype">
-        <span><%= config.title %></span>
+    <%- partial('_partial/loading') %>
+    <div class="content-container enter-preface">
+      <% if (!is_post()) { %>
+        <%- partial('_partial/header') %>
+      <% } %>
+      <div class="content width mx-auto px3 my1 <% if (!is_post()) { %>page<% } else { %>post<% } %>">
+          <%- body %>
       </div>
-    <% } %>
-    <%- partial('_partial/footer') %>
+      <% if (!is_post()) { %>
+        <div class="nametype">
+          <span><%= config.title %></span>
+        </div>
+      <% } %>
+      <%- partial('_partial/footer') %>
+    </div>
 </body>
 </html>
 <%- partial('_partial/styles') %>
