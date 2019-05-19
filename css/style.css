@@ -469,6 +469,7 @@ body {
 }
 .yah-loading-indicator {
   position: absolute !important;
+  z-index: 233;
   top: 45%;
   left: 50%;
   width: 44px;

@@ -11,7 +11,7 @@ class StaticPageManager {
 
   initData () {
     this.config = {
-      minLoadingDuration: 1000
+      minLoadingDuration: 2000
     }
     this.state = {
       startTime: Date.now(),
@@ -32,12 +32,14 @@ class StaticPageManager {
       ? 0
       : Math.max(0, this.config.minLoadingDuration - loadingCost)
 
+    console.log(123, renderDelay)
+
     const removeLoading = () => {
       this.$map.$contentContainer.classList.add('appeared')
       anime({
         targets: this.$map.$yahLoading,
         opacity: 0,
-        duration: 418,
+        duration: 618,
         complete: () => {
           this.$map.$yahLoading.remove()
           this.initStoryOrigin()
