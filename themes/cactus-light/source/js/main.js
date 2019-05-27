@@ -40,7 +40,7 @@ class StaticPageManager {
         duration: 618,
         complete: () => {
           this.$map.$yahLoading.remove()
-          this.initStoryOrigin()
+          new StoryOrigin()
         }
       })
     }
@@ -68,59 +68,76 @@ class StaticPageManager {
     })
   }
 
-  initStoryOrigin () {
-    // @TODO: Refactor with PTS
-    const space = new CanvasSpace('pt').setup({
-      bgcolor: '#e3e1dc'
-    })
+}
 
-    const form = new Form(space)
+Pts.namespace(window)
+class StoryOrigin {
 
-    const center = space.size.$divide(2)
+  constructor () {
+    this.config = {
+      bgcolor: '#e3e1dc',
+      cellSize: 4,
+    }
+
+    this.init()
+  }
+
+  init () {
+    // Create Space
+    const space = new CanvasSpace('#story-origin-perform')
+      .setup({
+        bgcolor: this.config.bgcolor
+      })
+    const form = space.getForm()
+    let comb, samples, sampler
+
+    Pt.prototype.normalize = function () {
+      const m = this.magnitude()
+      let pt
+
+      if(m === 0) {
+        pt = new Pt()
+      } else {
+        pt = new Pt( this.x/m, this.y/m, this.z/m )
+      }
+
+      this.to(pt)
+
+      return this
+    }
 
     // A Circle that follows mouse and comb the VectorLines
-    class Comb extends Circle {
-
-      constructor (...args) {
-        super(...args)
-        this.lastPos = new Vector()
-        this.offset = new Vector()
+    class Comb {
+      start () {
+        this.lastPos = new Pt()
+        this.offset = new Pt()
         this.radius = 20
+        this.$circle = Circle.fromCenter(space.center, this.radius)
       }
 
       move (x, y) {
-        this.lastPos.set(this)
-        this.set(x, y)
-        this.offset = this.$subtract(this.lastPos).normalize()
-        this.lastPos.set(x, y)
+        this.lastPos.to(this.$circle.p1)
+        this.$circle.p1.to(x, y)
+        this.offset = this.$circle.p1.$subtract(this.lastPos).normalize()
+        this.lastPos.to(x, y)
       }
 
-      animate (time, frame, ctx) {
-      }
+      action (type, x, y, evt) {
+        evt.stopPropagation()
 
-      // follow mouse movement
-      onMouseAction (type, x, y, evt) {
         if (type == 'move') {
           this.move(x, y)
         }
       }
-
-      onTouchAction (type, x, y, evt) {
-        this.onMouseAction(type, x, y)
-      }
     }
 
-    // create comb and add to space
-    var comb = new Comb()
-    space.add(comb)
-
     // VectorLine is a hair-like point that can be "combed"
-    class VectorLine extends Vector {
+    class VectorLine extends Pt {
       constructor (...args) {
         super(...args)
 
-        this.direction = new Vector() // hair direction
-        this.pointer = new Vector() // hair
+        this.direction = new Pt() // hair direction
+        this.pointer = new Pt() // hair
 
         this.pulled = false // has it been pulled by comb
         this.moved = false // has it been touched and not yet reset
@@ -133,59 +150,54 @@ class StaticPageManager {
       }
 
       initVec (...args) {
-        this.direction.set(...args).normalize()
-        this.pointer.set(...args).multiply(this.mag / 4)
+        this.direction.to(...args).normalize()
+        this.pointer.to(...args)
+        this.pointer.multiply(this.mag / 4)
         return this
       }
 
       animate (time, frame, ctx) {
-        var c = this.checkRange()
-        form.stroke(c).line(new Line(this).to(this.pointer).relative())
+        const color = this.checkRange()
+        form.stroke(color).line([this, this.$add(this.pointer)])
 
-        // reset to initial direction (when clicked)
+        // Reset to initial direction (when clicked)
         if (this.resetTimer >= 0) this.resetTimer += frame
         if (this.resetTimer > 0 && this.resetTimer < 2000) {
-          var ang = center.$subtract(this).angle()
-          var dir = new Vector(Math.cos(ang), Math.sin(ang))
-          this.direction.set(dir)
+          const ang = space.center.$subtract(this).angle()
+          const dir = new Pt(Math.cos(ang), Math.sin(ang))
+          this.direction.to(dir)
           this.pointer.add(dir).divide(1.2)
         }
       }
 
-      // track mouse up
-      onMouseAction (type, x, y, evt) {
+      // Track mouse up
+      action (type, x, y, evt) {
         if (type == 'up' && this.moved) {
           this.resetTimer = 0
           this.moved = false
         }
       }
 
-      onTouchAction (type, x, y, evt) {
-        this.onMouseAction(type, x, y)
-      }
-
       checkRange () {
         let color
 
-        // pull it when intersecting with comb
-        if (comb.intersectPoint(this.x, this.y)) {
+        // Pull it when intersecting with comb
+        if (Circle.withinBound(comb.$circle, this)) {
           this.intensity = 0.5
-          let dm = 1 - (this.distance(comb) / comb.radius)
+          const dm = 1 - (this.$subtract(comb.$circle.p1).magnitude() / comb.radius)
 
           this.pull_power = this.pull_power > 0 ? this.pull_power - 0.25 : 0
           this.pointer.add(comb.offset.$multiply(dm * this.pull_power))
-          this.direction.set(this.pointer).normalize()
+          this.direction.to(this.pointer).normalize()
           this.pulled = true
           this.moved = true
-
           color = `rgba(${Math.ceil(this.pointer.y / comb.radius * 100 + 150)}, 50, ${Math.ceil(this.pointer.x / comb.radius * 100 + 150)}`
-
-        // not pulled
         } else {
-          this.pull_power = 9 // reset pull power
+          // Not pulled
+          this.pull_power = 9 // Reset pull power
 
-          if (this.pulled) { // transition back to maximum magnitude value
-            let _mag = this.pointer.magnitude()
+          if (this.pulled) { // Transition back to maximum magnitude value
+            const _mag = this.pointer.magnitude()
             if (_mag > this.mag) {
               this.pointer.set(this.direction.$multiply(_mag * 0.95))
             } else {
@@ -197,65 +209,71 @@ class StaticPageManager {
           color = (this.pointer.y < 0) ? 'rgba(230,25,93' : 'rgba(54,53,51'
         }
 
-        return `${color},${this.intensity})`
+        return `${color}, ${this.intensity})`
       }
     }
 
-    // SamplePoints is a kind of PointSet in pt.ext.
-    // It distributes a set of points and optimizes for uniform distance.
-    var samples = new SamplePoints()
-    samples.setBounds(new Rectangle().size(space.size.x, space.size.y), true)
-    samples.poissonSampler(4) // target 5px radius
-    var lastTime = 0
-    var counter = 0
+    // Create comb and add to space
+    comb = new Comb()
+    space.add(comb)
 
-    // fill canvas in white initially and no refresh
+    // Fill canvas in white initially and no refresh
+    let lastTime = 0
+    let counter = 0
     space.refresh(false)
-    space.clear('#e3e1dc')
+    space.clear(this.config.bgcolor)
 
     space.add({
+      start: () => {
+        // Create samples
+        sampler = poissonDiscSampler(
+          space.innerBound.width,
+          space.innerBound.height,
+          this.config.cellSize
+        )
+        samples = []
+      },
+
       animate: function (time, frameTime, ctx) {
         if (counter > 3000) { // to complete at 3000 points
-          for (var i = 0; i < samples.count(); i++) {
-            form.point(samples.getAt(i), 2, true)
-            let vecline = new VectorLine(samples.getAt(i))
-            let dir = center.$subtract(samples.getAt(i)).angle()
+          samples.map(p => {
+            p = new Pt(p)
+            const vecline = new VectorLine(p)
+            const dir = space.center.$subtract(p).angle()
             vecline.initVec(Math.cos(dir), Math.sin(dir))
             space.add(vecline)
-          }
+          })
 
-          // remove this actor when done
+          // Remove this actor when done
           space.remove(this)
           space.refresh(true)
-        }
-
-        // add 50 points per 25ms
-        var count = 0
-        while (time - lastTime < 25 && count++ < 50) {
-          let s = samples.sample(10, 'poisson')
-          ctx.fillStyle = '#fff'
-          if (s) {
-            form.fill('rgba(50,0,20,.3)').stroke(false).point(s, 1)
-            samples.to(s)
-            counter++
-          } else {
-            counter = 3001 // assuming completion if no more
+        } else {
+          // Fade in animation
+          // Add 50 points per 25ms
+          let count = 0
+          while (time - lastTime < 25 && count++ < 50) {
+            let s = sampler()
+            ctx.fillStyle = '#fff'
+            if (s) {
+              samples.push(s)
+              form.fill('rgba(50,0,20,.15)').stroke(false).point(s, 1)
+              counter++
+            } else {
+              counter = 3001 // Assuming completion if no more
+              document.querySelector('.story-origin').classList.add('inited')
+            }
           }
         }
 
-        // fade out effect
-        form
-          .fill('rgba(227,225,220,.1')
-          .rect(new Rectangle()
-          .to(space.size))
         lastTime = time
       }
     })
 
-    // 4. Start playing
-    space.bindMouse()
-    space.bindTouch()
-    space.play()
+    // Start playing
+    space
+      .bindMouse()
+      .bindTouch()
+      .play()
   }
 
 }
