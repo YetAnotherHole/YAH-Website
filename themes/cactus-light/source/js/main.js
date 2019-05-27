@@ -106,13 +106,22 @@ class StaticPageManager {
       }
 
       onTouchAction (type, x, y, evt) {
-        this.onMouseAction(type, x, y)
+        evt.stopPropagation()
+        this.onMouseAction(type, evt.layerX, evt.layerY)
       }
     }
 
     // create comb and add to space
-    var comb = new Comb()
+    const comb = new Comb()
+    comb.set(space.center)
     space.add(comb)
+
+    // create flower and add to space
+    const flower = new Circle()
+    flower.animate = () => {}
+    flower.set(space.center)
+    flower.setRadius(40)
+    space.add(flower)
 
     // VectorLine is a hair-like point that can be "combed"
     class VectorLine extends Vector {
@@ -180,9 +189,9 @@ class StaticPageManager {
 
           color = `rgba(${Math.ceil(this.pointer.y / comb.radius * 100 + 150)}, 50, ${Math.ceil(this.pointer.x / comb.radius * 100 + 150)}`
 
-        // not pulled
+        // not pulled, init color pattern
         } else {
-          this.pull_power = 9 // reset pull power
+          this.pull_power = 7 // reset pull power
 
           if (this.pulled) { // transition back to maximum magnitude value
             let _mag = this.pointer.magnitude()
@@ -192,9 +201,19 @@ class StaticPageManager {
               this.pulled = false
             }
             this.intensity = Math.min(0.4, Math.max(5, _mag / (this.mag * 5)))
+          } else {
+            const brandColor = 'rgba(230,25,93'
+            const accentColor = 'rgba(127,50,159'
+
+            if ((this.intensity === 0.3 || !this.pulled)&& flower.intersectPoint(this.x, this.y)) {
+              color = accentColor
+              // this.intensity = this.pointer.y < 0 ? 0.8 : 0.5
+              this.intensity = 0.5
+            } else {
+              color = this.pointer.y < 0 ? brandColor : 'rgba(54,53,51'
+            }
           }
 
-          color = (this.pointer.y < 0) ? 'rgba(230,25,93' : 'rgba(54,53,51'
         }
 
         return `${color},${this.intensity})`
@@ -205,7 +224,7 @@ class StaticPageManager {
     // It distributes a set of points and optimizes for uniform distance.
     var samples = new SamplePoints()
     samples.setBounds(new Rectangle().size(space.size.x, space.size.y), true)
-    samples.poissonSampler(4) // target 5px radius
+    samples.poissonSampler(4) // target 4px radius
     var lastTime = 0
     var counter = 0
 
@@ -217,7 +236,7 @@ class StaticPageManager {
       animate: function (time, frameTime, ctx) {
         if (counter > 3000) { // to complete at 3000 points
           for (var i = 0; i < samples.count(); i++) {
-            form.point(samples.getAt(i), 2, true)
+            // form.point(samples.getAt(i), 2, true)
             let vecline = new VectorLine(samples.getAt(i))
             let dir = center.$subtract(samples.getAt(i)).angle()
             vecline.initVec(Math.cos(dir), Math.sin(dir))
@@ -248,6 +267,7 @@ class StaticPageManager {
           .fill('rgba(227,225,220,.1')
           .rect(new Rectangle()
           .to(space.size))
+
         lastTime = time
       }
     })
