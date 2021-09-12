@@ -1,6 +1,6 @@
 # YAH-Website
 
-Yet another website in Yet Another Hole. See: http://yetanotherhole.com
+Yet another website in Yet Another Hole. See: https://yetanotherhole.github.io/YAH-Website
 
 ## Introduction
 
